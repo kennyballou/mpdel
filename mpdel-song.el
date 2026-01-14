@@ -119,6 +119,14 @@ when the song changes.")
     ('stop (insert "Currently stopped\n")
            (mpdel-song--stop-timer))))
 
+(defun mpdel-song--display-random-state ()
+  "Give information about random playback."
+  (insert (format "Random: %s\n" (if libmpdel--random "Yes" "No"))))
+
+(defun mpdel-song--display-repeat-state ()
+  "Give information about repeated playback."
+  (insert (format "Repeat: %s\n" (if libmpdel--repeat "Yes" "No"))))
+
 (defun mpdel-song--display-play-time (data)
   "Give information about current play time in DATA."
   (insert
@@ -164,6 +172,8 @@ In particular, it must contain key symbol `elapsed' and symbol
       (erase-buffer)
       (setq mpdel-song-song (libmpdel-current-song))
       (mpdel-song--display-play-state)
+      (mpdel-song--display-random-state)
+      (mpdel-song--display-repeat-state)
       (mpdel-song--display-metadata)
       (mpdel-song--display-play-time data))))
 
